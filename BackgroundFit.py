@@ -108,7 +108,7 @@ def PerformFitTotal():
     print ' About to start MINUIT'
     sigma_init = 0.07
     sigma_init_away = 0.2
-    limit_sigmaup = 0.25
+    limit_sigmaup = 0.35
     limit_sigmado = 0.025
     m = Minuit(Chi2,
                s3=sigma_init, limit_s3=(limit_sigmado,limit_sigmaup), error_s3=0.001,
@@ -131,8 +131,8 @@ def PerformFitTotal():
                v4_t=0.01, limit_v4_t =(0,0.50), error_v4_t=0.001, 
                v4_a=0.01, limit_v4_a =(0,0.50), error_v4_a=0.001,
                V3=0 , limit_V3 = (-0.1, 0.5), error_V3 =0.001,
-               #V1=0.0, fix_V1=True) 
-               V1=0.0, limit_V1 = (-0.1, 0.5), error_V1=0.0001)
+               V1=0.0, fix_V1=True) 
+               #V1=0.0, limit_V1 = (-0.1, 0.5), error_V1=0.0001)
                #B=2.0 , limit_B = (0.1, 10.0), error_B = 0.01)
     m.migrad()
     #m.minos()  #more sophisticated error estimation
