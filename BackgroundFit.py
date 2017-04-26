@@ -136,11 +136,11 @@ def PerformFitTotal():
                #B=2.0 , limit_B = (0.1, 10.0), error_B = 0.01)
     m.migrad()
     #m.minos()  #more sophisticated error estimation
-    ##m.print_matrix() #correlation
+    m.print_matrix() #correlation
     return m
     
 
-filename = "fout"
+filename = "fInput"
 
 
 finput = ROOT.TFile("%s.root" %(filename),"READ")
@@ -164,10 +164,12 @@ c["Outplane"] = pi/6.0
 
 #Minuit = PerformFitTotal()
 Minuit = PerformFitTotal()
+Minuit.draw_contour('B','V3', bound=5);
 #Minuit.draw_profile('V1')
 
 
 plt.show()
+plt.savefig('Contour.png')
 Plot(Minuit, dataALL, dataBKG, phi_s, c)
 
 
