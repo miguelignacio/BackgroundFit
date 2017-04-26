@@ -137,6 +137,7 @@ def PerformFitTotal():
     m.migrad()
     #m.minos()  #more sophisticated error estimation
     m.print_matrix() #correlation
+    plt.show()
     return m
     
 
@@ -164,7 +165,21 @@ c["Outplane"] = pi/6.0
 
 #Minuit = PerformFitTotal()
 Minuit = PerformFitTotal()
-Minuit.draw_contour('B','V3', bound=5);
+#Minuit.draw_contour('B','V3', bound=5, show_sigma=True);
+errx, erry, line = Minuit.mncontour('B', 'V3', numpoints=50, sigma=1.0)
+#print line
+x = [pair[0] for pair in line]
+y = [pair[1] for pair in line]
+
+plt.plot(x,y,'-b',label='1 sigma')
+errx, erry, line = Minuit.mncontour('B', 'V3', numpoints=50, sigma=2.0)
+x = [pair[0] for pair in line]
+y = [pair[1] for pair in line]
+plt.plot(x,y, 'r-', label='2 sigma')
+plt.xlabel('B')
+plt.ylabel('V3')
+plt.legend(loc='best')
+plt.show()
 #Minuit.draw_profile('V1')
 
 
