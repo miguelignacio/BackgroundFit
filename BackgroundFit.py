@@ -166,25 +166,22 @@ c["Outplane"] = pi/6.0
 #Minuit = PerformFitTotal()
 Minuit = PerformFitTotal()
 #Minuit.draw_contour('B','V3', bound=5, show_sigma=True);
-errx, erry, line = Minuit.mncontour('B', 'V3', numpoints=50, sigma=1.0)
-#print line
-x = [pair[0] for pair in line]
-y = [pair[1] for pair in line]
 
-plt.plot(x,y,'-b',label='1 sigma')
-errx, erry, line = Minuit.mncontour('B', 'V3', numpoints=50, sigma=2.0)
-x = [pair[0] for pair in line]
-y = [pair[1] for pair in line]
-plt.plot(x,y, 'r-', label='2 sigma')
-plt.xlabel('B')
-plt.ylabel('V3')
-plt.legend(loc='best')
-plt.show()
-#Minuit.draw_profile('V1')
+def PlotMinosContour(var1,var2,SigmaMax=3, npoints=10):
+    for Sigma in range(1,SigmaMax+1):
+        errx, erry, line = Minuit.mncontour(var1, var2, numpoints=npoints, sigma=Sigma)
+        #print line
+        x = [pair[0] for pair in line]
+        y = [pair[1] for pair in line]
+        plt.plot(x,y,'-o',label='%i sigma' %int(Sigma))
+    plt.xlabel(var1)
+    plt.ylabel(var2)
+    plt.legend(loc='best')
+    plt.savefig('MinosContour_%s_%s.png' %(var1,var2))
+    
 
-
-plt.show()
-plt.savefig('Contour.png')
+PlotMinosContour('B','V3', SigmaMax=3, npoints=20)
+    
 Plot(Minuit, dataALL, dataBKG, phi_s, c)
 
 
